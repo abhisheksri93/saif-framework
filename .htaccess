@@ -1,6 +1,12 @@
-RewriteEngine On
+<IfModule mod_rewrite.c>
 
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
+    Options +FollowSymLinks
+    RewriteEngine on
 
-RewriteRule ^(.+)$ index.php/$1 [L]
+    RewriteRule ^([a-z0-9_-]+)\.html$ index.php/page/$1 [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond $1 !^(index\.php|asset|robots\.txt)
+    RewriteRule ^(.*)$ ./index.php?/$1 [L,QSA]
+
+</IfModule>
